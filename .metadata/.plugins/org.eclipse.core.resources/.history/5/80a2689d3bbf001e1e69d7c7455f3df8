@@ -1,0 +1,25 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8" isELIgnored="false"%>
+    
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<script>
+    $(document).ready(function() {
+        // 세션에 저장된 alertMsg가 있는지 확인합니다.
+        var alertMsg = "<%=session.getAttribute('alertMsg')%>";
+        if (alertMsg != null && alertMsg != "") {
+            alert(alertMsg);
+            // 메시지 표시 후 세션에서 제거합니다.
+            <% session.removeAttribute("alertMsg"); %>
+        }
+    });
+</script>
+		<jsp:forward page="/WEB-INF/views/home.jsp"/>
+</body>
+</html>

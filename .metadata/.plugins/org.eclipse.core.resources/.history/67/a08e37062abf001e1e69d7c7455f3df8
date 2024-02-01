@@ -1,0 +1,23 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+    
+<!DOCTYPE html>
+<html>
+<head>
+  		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<jsp:include page="../common/header.jsp"/>
+  	<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+	<div class="topContent">
+		<div class="topInnerOuter" style="font-size:50px">
+			<h1>${loginUser.shopName}님 환영합니다</h1>
+			<button type="button" class="btn btn-secondary"><a href="myPage.sh?shopId=${loginUser.shopId}">마이페이지</a></button>
+		</div>
+	</div>
+	
+<a href="myPage.sh?shopId=${loginUser.shopId}">마이페이지</a>
+</body>
+</html>
