@@ -1,0 +1,5 @@
+package com.practice.kioskPj.common;
+
+public class Pagination {
+
+}

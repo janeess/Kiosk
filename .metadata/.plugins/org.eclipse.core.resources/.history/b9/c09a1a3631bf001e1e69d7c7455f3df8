@@ -1,0 +1,88 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<jsp:include page="../common/header.jsp"/>
+	
+	<form name="board" id="board" method="post" action="update.sh">
+
+						<article class="member_join inner member_com">
+							<div class="group">
+								<h3 class="tit-st4 rel">
+									정보수정 <span class="ab f16 color-purple">* 필수 입력 값</span>
+								</h3>
+								<ul class="sect">
+									<li class="item"><label for="userName" class="t">이름 <span class="color-purple">*</span></label>
+										<div class="cont">
+											<input type="text" name="userName" id="userName" value="${loginUser.shopName}" readonly>
+										</div>
+									</li>
+									<li class="item"><label for="userId" class="t">ID <span class="color-purple">*</span></label>
+										<div class="cont ck_id">
+											<input type="text" value="${loginUser.userId }" name="userId" id="userId" readonly> 
+											<input type="hidden" name="chkuserIdYN" id="chkuserIdYN" value="N">
+											<span class="txt ml">특수문자를 제외한 영문, 숫자 4~20자 이내</span>
+										</div>
+									</li>
+									<li class="item">
+										<label for="userPwd" class="t">비밀번호 <span class="color-purple">*</span></label>
+										<div class="cont">
+											<input type="password" name="userPwd" id="userPwd"> <span class="txt ml">영문, 숫자, 특수문자 중 2종류 이상 8~12자 이내</span>
+										</div>
+									</li>
+									<li class="item"><label for="reuserPwd" class="t">비밀번호 확인 <span class="color-purple">*</span></label>
+										<div class="cont">
+											<input type="password" name="reuserPwd" id="reuserPwd"> <span class="txt ml">확인을 위해 한번 더 입력하시기 바랍니다.</span>
+										</div>
+									</li>
+									<li class="item"><strong class="t">이메일 <span class="color-purple">*</span></strong>
+										<div class="cont ck_email" >
+											<ul class="memberEmail clearfix">
+												<li class="e1"><label for="email" class="hide">이메일 아이디와 주소</label> 
+													<input type="text" name="email" id="email" value="${loginUser.email }">
+													<input type="hidden" name="chkuserEmailYN" id="chkuserEmailYN" value="N">
+													<button type="button" class="bg-black chkuserEmail">중복확인</button>
+												</li>
+											</ul>
+										</div></li>
+									<li class="item"><strong class="t">휴대폰 <span class="color-purple">*</span></strong>
+										<div class="cont">
+											<div class="tel_w">
+												<ul class="clearfix tel">
+													<li><label for="tel1" class="hide">휴대폰 앞</label> 
+														<select name="tel1" id="tel1">
+															<option value="010">010</option>
+															<option value="011">011</option>
+															<option value="016">016</option>
+															<option value="017">017</option>
+															<option value="018">018</option>
+															<option value="019">019</option>
+														</select>
+													</li>
+													<li><label for="tel2" class="hide">휴대폰 중간</label> <input type="text" name="tel2" id="tel2" class="small" maxlength="4" value="${arr[1]}" onkeyup="this.value=this.value.replace(/[^0-9]/g,'');"></li>
+													<li><label for="tel3" class="hide">휴대폰 끝</label> <input type="text" name="tel3" id="tel3" class="small" maxlength="4" value="${arr[2]}" onkeyup="this.value=this.value.replace(/[^0-9]/g,'');"></li>
+												</ul>
+												<input type="hidden" name="userPhone" id="userPhone" value="">
+											</div>
+										</div>
+									</li>
+								</ul>
+							</div>
+							<br><br>
+							<div class="bbs-btn_w clearfix tac flr mt">
+								<span class="fl">
+									<button type="submit" class="bbs-btn-st2 bg-black_r" formaction="deleteMember.me">회원탈퇴</button>
+								</span> <span class="fr">
+									<button type="submit" class="bbs-btn-st2 bg-purple3" onclick="formCheck();return false;" formaction="update.me">수정</button>
+									<button class="bbs-btn-st2 bg-black_r" onclick="history.back();return false;">취소</button>
+								</span>
+							</div>
+						</article>
+					</form>
+</body>
+</html>

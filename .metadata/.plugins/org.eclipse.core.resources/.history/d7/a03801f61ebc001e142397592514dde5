@@ -1,0 +1,96 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body class="hide-focus-ring">
+	<jsp:include page="../common/header.jsp" />
+	
+	<c:if test="${not empty errorMsg}">
+		<script type="text/javascript">
+			alert("${errorMsg}");
+			<%session.removeAttribute("errorMsg"); %>
+		</script>
+	</c:if>
+	<c:if test="${not empty alertMsg}">
+		<script type="text/javascript">
+			alert("${alertMsg}");
+			<%session.removeAttribute("alertMsg"); %>
+		</script>
+	</c:if>
+
+	<section id="wrap">
+		<!-- Header Section Begin -->
+		<jsp:include page="../common/header.jsp" />
+		<!-- Header End -->
+
+		<div id="depth_w" class="">
+			<div class="inner">
+				<ul class="clearfix dot dep1 li3">
+					<li class="home"><span><span>HOME</span></span></li>
+				</ul>
+			</div>
+		</div>
+		<script>
+			$(window).resize(function() {
+				if ($(window).width() > 1024) {
+					$("#depth_w .rel").hover(function() {
+						$(this).closest("#depth_w").addClass("on")
+						$(this).find(".depth").show();
+					}, function() {
+						$(this).closest("#depth_w").removeClass("on")
+						$(this).find(".depth").hide();
+					})
+					$("#depth_w .rel > a").focus(function() {
+						$(this).closest("#depth_w").addClass("on")
+						$(this).next(".depth").show();
+					})
+					$("#depth_w .depth > li:last-child a").focusout(function() {
+						$(this).closest("#depth_w").removeClass("on")
+						$("#depth_w .depth").stop(true, true).slideUp(150);
+					})
+				} else {
+					$("#depth_w .rel").click(function() {
+						$(this).closest("#depth_w").toggleClass("on")
+						$(this).find(".depth").toggle();
+					})
+				}
+			}).resize();
+		</script>
+
+
+		<div id="cont">
+			<div id="sub_page">
+				<div class="inner"></div>
+
+				<script>
+					var loc = $("#depth_w > div > ul > li").length - 1;
+					$("#depth_w .dep1").addClass("li" + loc);
+
+					var len = $(".tabs-st1 li").length;
+					$(".tabs-st1").addClass("li" + len);
+				</script>
+
+				<div class="sub_page">
+					<article class="ticket_com inner">
+						<ul>
+							<li class="group">
+								<div class="tit">${errorMsg}</div>
+								<div class="cont">
+									<dl class="t1">
+										<dt>요청하신 페이지를 처리중에 오류가 발생했습니다.</dt>
+										<dd>서비스 이용에 불편을 드려 죄송합니다.</dd>
+										<dd>다시 시도해 주시기 바랍니다.</dd>
+									</dl>
+								</div>
+							</li>
+						</ul>
+					</article>
+				</div>
+			</div>
+		</div>
+</body>
+</html>

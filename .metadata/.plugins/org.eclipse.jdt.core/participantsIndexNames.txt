@@ -1,0 +1,11 @@
+INDEX VERSION 1.131
+C:\Project\Project\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\852210001.index
+\kioskPj\src\main\java
+C:\Project\Project\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\3928537517.index
+\kioskPj\src\main\java
+C:\Project\Project\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\2719867799.index
+\kioskPj\src\main\java
+C:\Project\Project\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\4082372530.index
+\kioskPj\src\main\java
+C:\Project\Project\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\3501144409.index
+\kioskPj\src\main\java

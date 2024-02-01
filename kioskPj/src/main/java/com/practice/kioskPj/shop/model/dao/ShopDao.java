@@ -1,0 +1,62 @@
+package com.practice.kioskPj.shop.model.dao;
+
+import java.util.ArrayList;
+
+import org.apache.ibatis.session.RowBounds;
+import org.mybatis.spring.SqlSessionTemplate;
+import org.springframework.stereotype.Repository;
+
+import com.practice.kioskPj.common.PageInfo;
+import com.practice.kioskPj.shop.model.vo.Shop;
+
+
+@Repository
+public class ShopDao {
+	
+	// 가게 리스트 뽑아주기
+	public ArrayList<Shop> selectListShop(SqlSessionTemplate sqlSession) {
+		return (ArrayList) sqlSession.selectList("shopMapper.selectListShop");
+	}
+
+	//로그인 서비스
+	public Shop loginMember(SqlSessionTemplate sqlSession, String shopId) {
+		return sqlSession.selectOne("shopMapper.loginMember", shopId);
+	}
+
+	// 로그인시 아이디와 비밀번호 확인
+	public Shop loginUser(SqlSessionTemplate sqlSession, Shop s) {
+		return sqlSession.selectOne("shopMapper.loginUser", s);
+	}
+
+	// 회원정보 리스트 불러오기
+	public Shop selectMyPage(SqlSessionTemplate sqlSession, String shopId) {
+		return sqlSession.selectOne("shopMapper.selectMyPage", shopId);
+	}
+	
+	//회원정보 수정
+	public int updateShop(SqlSessionTemplate sqlSession, Shop s) {
+		return sqlSession.update("shopMapper.updateShop",s);
+	}
+
+	// 전체 상점 개수
+	public int selectListCount(SqlSessionTemplate sqlSession) {
+		return sqlSession.selectOne("shopMapper.selectListShopCount");
+	}
+
+	public ArrayList<Shop> selectAllShopList(SqlSessionTemplate sqlSession, PageInfo pi) {
+		
+		int limit = pi.getBoardLimit();
+		int offset = (pi.getCurrentPage()-1)*limit;
+
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		
+		return (ArrayList)sqlSession.selectList("shopMapper.selectAllShopList", null, rowBounds);
+	}
+
+	public int changeUserStatus(SqlSessionTemplate sqlSession, Shop s) {
+		return sqlSession.update("shopMapper.changeUserStatus",s);
+	}
+
+
+
+}
