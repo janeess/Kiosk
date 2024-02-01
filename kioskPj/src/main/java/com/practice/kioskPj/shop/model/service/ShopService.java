@@ -28,6 +28,9 @@ public interface ShopService {
 
 	// 유저 상태변경
 	int changeUserStatus(Shop s);
+
+	// 회원 삭제
+	int deleteShop(String shopId);
 	
 
 }

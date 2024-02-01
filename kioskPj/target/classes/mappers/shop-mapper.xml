@@ -90,5 +90,22 @@
 		WHERE SHOP_ID=#{shopId}
 	</update>	
 	
+	<!-- 유저 삭제 -->
+	<delete id="deleteShop" parameterType="shop">
+		DELETE SHOPS
+		WHERE SHOP_ID=#{shopId}
+	</delete>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
   
   </mapper>

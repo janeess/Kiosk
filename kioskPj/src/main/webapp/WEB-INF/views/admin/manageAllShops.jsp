@@ -75,6 +75,7 @@
 	 					  <th class="admin_board_head">계약일</th>
 						  <th class="admin_board_head">현재 STATUS</th>
 						  <th class="admin_board_head">STATUS 변경</th>
+						  <th class="admin_board_head">업체 삭제</th>
 					    </tr>
 					</thead>
 					<tbody>
@@ -92,17 +93,24 @@
 								    <option value="N" ${s.userStatus == 'N' ? 'selected' : ''}>비활성</option>
 								</select>
 						        </td>
+						        <td>
+						          <button class="btn btn-secondary" onclick="deleteShop('${s.shopId}')" data-shop-id="${s.shopId}">삭제</button>
+						        </td>
 						    </tr>
 						</c:forEach>
 					</tbody>
 				</table>
+				
+				
 			</div>	
 			
+			<script>
 			
-				<script>
+			
+					<!-- 수정 -->
 					function changeStatus(shopId, status) {
 					    $.ajax({
-					        url: 'changeStatus', // 상태 변경을 처리하는 서버의 URL
+					        url: 'changeStatus',
 					        method: 'POST',
 					        data: {shopId: shopId, userStatus: status},
 					        success: function(response) {
@@ -114,6 +122,25 @@
 					        }
 					    });
 					}
+					
+					<!-- 삭제 -->
+				    function deleteShop(shopId) {
+				        if(confirm("모든 데이터가 삭제됩니다. 정말로 삭제하시겠습니까?")) {
+				            $.ajax({
+				                url: 'delete.sh',
+				                method: 'POST',
+				                data: { shopId:shopId },
+				                success: function(response) {
+				                    alert("삭제되었습니다.");
+				                    window.location.reload(); 
+				                },
+				                error: function(xhr, status, error) {
+				                    alert("삭제 실패: " + error);
+				                }
+				            });
+				        }
+				    }
+					
 			</script> 
 			
 			

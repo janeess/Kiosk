@@ -71,11 +71,6 @@
 				<label for="shopEmail">*이메일 : </label>
 				<input type="text" class="form-control" id="shopEmail" value="" name="shopEmail"> <br>
 				
-				<c:if test="${loginUser.shopId ne 'admin'}">
-				<label for="contractPeriod">*계약기간 : </label>
-				<input type="text" class="form-control" id="contractPeriod" value="<fmt:formatDate value="${loginUser.contractPeriod}" pattern="yyyy-MM-dd"/>" name="contractPeriod" readonly> ~
-				<input type="text" class="form-control" id="contractPeriodEnd" value="<fmt:formatDate value="${sessionScope.contractPeriodEnd}" pattern="yyyy-MM-dd" />" name="contractPeriodEnd" readonly>
-				</c:if>
 				<br>
 				
 			</div>
@@ -99,7 +94,7 @@
         // 조건: 8 ~ 14자, 최소 하나의 특수문자
         var pwdPattern = /^(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,14}$/;
         if (!pwdPattern.test(shopPwd)) {
-            alert("비밀번호는 8자 이상 14자 이하로 입력해야ㅎ며, 최소 하나의 특수문자가 포함되어야 합니다");
+            alert("비밀번호는 8자 이상 14자 이하로 입력해야하며, 최소 하나의 특수문자가 포함되어야 합니다");
             $("#shopPwd").focus();
             return false;
         }
