@@ -53,8 +53,14 @@ public class ShopDao {
 		return (ArrayList)sqlSession.selectList("shopMapper.selectAllShopList", null, rowBounds);
 	}
 
+	//회원 수정
 	public int changeUserStatus(SqlSessionTemplate sqlSession, Shop s) {
 		return sqlSession.update("shopMapper.changeUserStatus",s);
+	}
+
+	// 회원 삭제
+	public int deleteShop(SqlSessionTemplate sqlSession, String shopId) {
+		return sqlSession.delete("shopMapper.deleteShop, shopId");
 	}
 
 

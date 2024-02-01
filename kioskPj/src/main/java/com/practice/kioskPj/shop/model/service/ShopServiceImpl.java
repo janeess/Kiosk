@@ -67,6 +67,12 @@ public class ShopServiceImpl implements ShopService {
 	public int changeUserStatus(Shop s) {
 		return shopDao.changeUserStatus(sqlSession, s);
 	}
+
+	//회원 삭제
+	@Override
+	public int deleteShop(String shopId) {
+		return shopDao.deleteShop(sqlSession, shopId);
+	}
 	
 	
 

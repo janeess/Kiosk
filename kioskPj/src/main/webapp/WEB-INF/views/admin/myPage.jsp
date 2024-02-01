@@ -56,7 +56,7 @@
 				
 				<c:if test="${s.shopId ne 'admin'}">
 				<label for="shopName">*업체명 : </label>
-				<input type="text" class="form-control" id="shopName" value="${s.shopName}" name="shopName" readonly>
+				<input type="text" class="form-control" id="shopName" value="${s.shopName}" name="shopName" readonly> <br>
 				</c:if>
 				
 				<label for="shopRepresentative">*대표자 : </label>

@@ -130,8 +130,13 @@ public class ShopController {
 	        Calendar cal = Calendar.getInstance();
 	        cal.setTime(s.getContractPeriod());
 	        cal.add(Calendar.YEAR, 1); // 1년 추가
-			
+	        
+	        
+	        System.out.println("Contract Period End: " + cal.getTime());
+	        
 			session.setAttribute("contractPeriodEnd", cal.getTime());
+			
+			
 			session.setAttribute("loginUser", updateShop);
 			return "redirect:/myPageForm.sh";
 
@@ -179,6 +184,21 @@ public class ShopController {
 	        e.printStackTrace();
 	        return "error";
 	    }
+	}
+	
+	// 회원 삭제
+	@RequestMapping("delete.sh")
+	public ModelAndView kickMember(String shopId, HttpSession session, ModelAndView mv) {
+
+		int result = shopService.deleteShop(shopId);
+
+		if (result > 0) {
+			mv.setViewName("redirect:/manageAllShopsForm");
+		} else {
+			mv.addObject("errorMsg", "탈퇴 처리 실패").setViewName("common/errorPage");
+		}
+
+		return mv;
 	}
 
 
