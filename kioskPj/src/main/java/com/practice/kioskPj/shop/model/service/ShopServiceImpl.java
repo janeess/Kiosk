@@ -68,11 +68,35 @@ public class ShopServiceImpl implements ShopService {
 		return shopDao.changeUserStatus(sqlSession, s);
 	}
 
-	//회원 삭제
+	// 업체 등록
+	@Override
+	public int enrollShop(Shop s) {
+		return shopDao.enrollShop(sqlSession, s);
+	}
+
+	// 아이디 중복체크
+	@Override
+	public int checkDupId(String checkId) {
+		return shopDao.checkDupId(sqlSession, checkId);
+	}
+	
+	// 업체명 중복체크
+	@Override
+	public int checkDupName(String checkName) {
+		return shopDao.checkDupName(sqlSession, checkName);
+	}
+	
+	// 업체 삭제
 	@Override
 	public int deleteShop(String shopId) {
 		return shopDao.deleteShop(sqlSession, shopId);
 	}
+
+
+
+
+
+
 	
 	
 

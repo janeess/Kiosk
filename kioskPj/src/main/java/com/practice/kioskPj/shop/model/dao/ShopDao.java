@@ -58,10 +58,31 @@ public class ShopDao {
 		return sqlSession.update("shopMapper.changeUserStatus",s);
 	}
 
-	// 회원 삭제
-	public int deleteShop(SqlSessionTemplate sqlSession, String shopId) {
-		return sqlSession.delete("shopMapper.deleteShop, shopId");
+	// 업체 등록
+	public int enrollShop(SqlSessionTemplate sqlSession, Shop s) {
+		return sqlSession.insert("shopMapper.enrollShop",s);
 	}
+
+	// 아이디 중복체크
+	public int checkDupId(SqlSessionTemplate sqlSession, String checkId) {
+		return sqlSession.selectOne("shopMapper.checkDupId", checkId);
+	}
+	
+	// 업체명 중복체크
+	public int checkDupName(SqlSessionTemplate sqlSession, String checkName) {
+		return sqlSession.selectOne("shopMapper.checkName", checkName);
+	}
+		
+	// 업체 삭제
+	public int deleteShop(SqlSessionTemplate sqlSession, String shopId) {
+		return sqlSession.delete("shopMapper.deleteShop", shopId);
+	}
+
+
+
+
+
+
 
 
 

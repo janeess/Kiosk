@@ -29,8 +29,21 @@ public interface ShopService {
 	// 유저 상태변경
 	int changeUserStatus(Shop s);
 
-	// 회원 삭제
+	// 업체 등록
+	int enrollShop(Shop s);
+
+	// 아이디 중복체크
+	int checkDupId(String checkId);
+	
+	// 업체명 중복체크
+	int checkDupName(String checkName);
+	
+	// 업체 삭제
 	int deleteShop(String shopId);
+
+
+	
+
 	
 
 }

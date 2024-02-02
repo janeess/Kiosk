@@ -15,8 +15,6 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <style>
 	 .content {
@@ -44,38 +42,39 @@
 	<div class="content">
 		<br><br>
 		<div class="innerOuter">
-		
-			<h2>'${loginUser.shopName}' 정보</h2>
+			<h2>업체 등록</h2>
 			<br>
-			<input type="hidden" id="shopId" value="${loginUser.shopId}">
-			
-			<form name="board" id="board" method="post" action="update.sh">
+			<form name="board" id="board" method="post" action="enrollShop.sh">
 			<div class="form-group">
-				<label for="shopId">*ID : </label>
-				<input type="text" class="form-control" id="shopId" value="${loginUser.shopId}" name="shopId" readonly> <br>
+				<label for="shopId">ID : </label>
+				<input type="hidden" name="chkshopIdYN" id="chkshopIdYN" value="N">
+				<input type="text" class="form-control" id="shopId" value="" name="shopId"> <br>
+				<button type="button" class="bg-black chkshopId">중복확인</button><br><br>
 				
 				<label for="shopPwd">*비밀번호 : </label>
 				<input type="password" class="form-control" id="shopPwd" value="" name="shopPwd"> <br>
 				
-				<c:if test="${loginUser.shopId ne 'admin'}">
 				<label for="shopName">*업체명 : </label>
-				<input type="text" class="form-control" id="shopName" value="" name="shopName">
-				</c:if>
+				<input type="text" class="form-control" id="shopName" value="" name="shopName"> <br>
+				<input type="hidden" name="chkshopNAMEYN" id="chkshopNAMEYN" value="N">
+				<button type="button" class="bg-black chkshopName">중복확인</button><br><br>
 				
 				<label for="shopRepresentative">*대표자 : </label>
 				<input type="text" class="form-control" id="shopRepresentative" value="" name="shopRepresentative"> <br>
 				
-				<label for="shopPhone">*핸드폰번호 : </label>
+				<label for="shopPhone">*핸드폰번호(숫자만 입력해주세요) : </label>
 				<input type="text" class="form-control" id="shopPhone" value="" name="shopPhone"> <br>
 				
 				<label for="shopEmail">*이메일 : </label>
 				<input type="text" class="form-control" id="shopEmail" value="" name="shopEmail"> <br>
 				
+				<label for="shopLogoImage">로고이미지 </label>
+				<input type="file" class="form-control" id="shopLogoImage" value="" name="shopLogoImage"><br>
 				<br>
 				
 			</div>
-				<button type="submit" class="bbs-btn-st2 bg-purple3" onclick="formCheck();return false;" formaction="update.sh">수정</button>
-				<button class="bbs-btn-st2 bg-black_r" onclick="history.back();return false;">취소</button>
+				<button type="button" class="btn btn-secondary" onclick="formCheck();return false;" formaction="enrollShop.sh">등록</button>
+				<button class="btn btn-secondary" onclick="history.back();return false;">취소</button>
 			</form>
 		</div>
 		<br>
@@ -89,7 +88,20 @@
         var shopRepresentative = $("#shopRepresentative").val();
         var shopPhone = $("#shopPhone").val();
         var shopEmail = $("#shopEmail").val();
-
+		
+        
+		if ($("#chkshopIdYN").val() != 'Y') {
+			alert("아이디 중복체크를 하셔야 합니다.");
+			$('#shopId').focus();
+			return;
+		}
+		
+		if ($("#chkshopNAMEYN").val() != 'Y') {
+			alert("업체명 중복체크를 하셔야 합니다.");
+			$('#shopName').focus();
+			return;
+		}
+		
         // 비밀번호 검사
         // 조건: 8 ~ 14자, 최소 하나의 특수문자
         var pwdPattern = /^(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,14}$/;
@@ -131,12 +143,12 @@
 
         // 모든 검사를 통과하면 AJAX 요청 실행
         $.ajax({
-            url: 'update.sh', 
+            url: 'enrollShop.sh', 
             type: 'POST', 
             data: $('#board').serialize(), // 폼 데이터 직렬화
             success: function(response) {
-            	alert('업체가 성공적으로 등록되었습니다.');
-                $('#board').submit();
+            	alert('등록이 완료되었습니다.');
+            	window.location.href = "manageAllShopsForm";
             },
             error: function(error) {
             	alert('등록 중 오류가 발생했습니다.');
@@ -145,8 +157,97 @@
 
     	return false;
     }
-</script>
+    
+	// 아이디 중복 체크
+	$(function() {
+		$("#shopId").change(function() {
+			$("#chkshopIdYN").val("N");
+		});
+		
+		$(".chkshopId").click(
+				function() {
+					var id = $("#shopId").val();
+					
+					if (id == '') {
+						alert("아이디를 입력해주세요.");
+						$('#shopId').focus();
+						return false;
+					}
+
+					if (!id.match('^[a-zA-Z0-9]{4,20}$')) {
+						alert('아이디는 특수문자를 제외한 영문, 숫자 조합 4~20자로 사용 가능합니다.');
+						$('#shopId').focus();
+						return false;
+					}
+					
+					$.ajax({
+						url : "checkDupId.sh",
+						data : {
+							checkId : id
+						},
+						success : function(result) {
+							if (result == "NNNNN") { 
+								alert("아이디가 중복됩니다.");
+								$("#chkshopIdYN").val("N");
+								$('#shopId').focus();
+								return false;
+							}
+							alert("사용 가능한 아이디입니다.");
+							$("#chkshopIdYN").val("Y");
+						},
+						error : function() {
+							console.log("통신 실패!")
+						}
+					})
+				});
+		});
 	
+	// 업체명 중복 체크
+		$(function() {
+		$("#shopName").change(function() {
+			$("#chkshopNAMEYN").val("N");
+		});
+		
+		$(".chkshopName").click(
+				function() {
+					var name = $("#shopName").val();
+					
+					if (name == '') {
+						alert("업체명을 입력해주세요.");
+						$('#shopName').focus();
+						return false;
+					}
+
+					if (!name.match(/^[가-힣]{1,15}$/)) {
+						alert('업체명은 한글만 입력 가능합니다.');
+						$('#shopName').focus();
+						return false;
+					}
+					
+					$.ajax({
+						url : "checkDupName.sh",
+						data : {
+							checkName : name
+						},
+						success : function(result) {
+							if (result == "NNNNN") { 
+								alert("업체명이 중복됩니다.");
+								$("#chkshopNAMEYN").val("N");
+								$('#shopName').focus();
+								return false;
+							}
+							alert("사용 가능한 업체명입니다.");
+							$("#chkshopNAMEYN").val("Y");
+						},
+						error : function() {
+							console.log("통신 실패!")
+						}
+					})
+				});
+		});					
+
+    
+</script>
 	
 </body>
 </html>

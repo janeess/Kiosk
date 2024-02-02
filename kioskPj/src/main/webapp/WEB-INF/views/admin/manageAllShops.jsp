@@ -6,7 +6,17 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <style>
+	.btn btn-secondary {
+	    color: white; 
+	    text-decoration: none; 
+	}
+	.btn btn-secondary hover{
+	    color: white; 
+	    text-decoration: none; 
+	}
     #shp {
         margin: 0;
         height: 100%;
@@ -64,7 +74,7 @@
 <br>
 			<div class="shp">
 			<br>
-			<h3 style="text-align:center;">상점 리스트</h3> <br><br>
+			<h3 style="text-align:center;">상점 리스트</h3> <br>
 				<table id="memberList" class="admin_board_wrap">
 					<thead class="admin_boardList">
 					    <tr>
@@ -75,7 +85,8 @@
 	 					  <th class="admin_board_head">계약일</th>
 						  <th class="admin_board_head">현재 STATUS</th>
 						  <th class="admin_board_head">STATUS 변경</th>
-						  <th class="admin_board_head">업체 삭제</th>
+						  <th class="admin_board_head">비밀번호 초기화</th>
+						  <th class="admin_board_head">삭제</th>
 					    </tr>
 					</thead>
 					<tbody>
@@ -93,17 +104,25 @@
 								    <option value="N" ${s.userStatus == 'N' ? 'selected' : ''}>비활성</option>
 								</select>
 						        </td>
-						        <td>
-						          <button class="btn btn-secondary" onclick="deleteShop('${s.shopId}')" data-shop-id="${s.shopId}">삭제</button>
+						        <td class="admin_board_content_nm">
+						         	<button onclick="resetPassword('${s.shopId}')" class="btn btn-warning">비밀번호 초기화</button>
+						        </td>
+						        <td class="admin_board_content_nm">
+						        	<button class="btn btn-danger" onclick="deleteShop('${s.shopId}')" >삭제</button>
 						        </td>
 						    </tr>
 						</c:forEach>
 					</tbody>
 				</table>
 				
-				
 			</div>	
-			
+				<br><br>
+				<div id="ibtn" style="text-align: center;">
+					<a href="enrollShopForm.sh" class="btn btn-secondary">상점 등록</a>
+					<a href="myPageForm.sh" class="btn btn-secondary">목록</a>
+				</div>
+				<br><br>
+				
 			<script>
 			
 			
@@ -124,22 +143,43 @@
 					}
 					
 					<!-- 삭제 -->
-				    function deleteShop(shopId) {
-				        if(confirm("모든 데이터가 삭제됩니다. 정말로 삭제하시겠습니까?")) {
-				            $.ajax({
-				                url: 'delete.sh',
-				                method: 'POST',
-				                data: { shopId:shopId },
-				                success: function(response) {
-				                    alert("삭제되었습니다.");
-				                    window.location.reload(); 
-				                },
-				                error: function(xhr, status, error) {
-				                    alert("삭제 실패: " + error);
-				                }
-				            });
-				        }
-				    }
+					function deleteShop(shopId) {
+					    if(confirm("모든 데이터가 삭제됩니다. 해당 상점을 삭제하시겠습니까?")) {
+					        $.ajax({
+					            url: 'delete.sh', // 서버 측 처리 URL
+					            method: 'POST',
+					            data: {shopId: shopId}, // 서버로 전달할 데이터
+					            success: function(response) {
+					                alert("상점이 삭제되었습니다.");
+					                window.location.reload(); // 페이지 새로 고침
+					            },
+					            error: function(xhr, status, error) {
+					                alert("삭제 실패: " + error);
+					            }
+					        });
+					    }
+					}
+					
+					
+					<!--비밀번호 초기화 -->
+					function resetPassword(shopId) {
+					    if (confirm("해당 상점의 비밀번호를 초기화하시겠습니까?")) {
+					        $.ajax({
+					            url: 'resetPassword.sh', 
+					            type: 'POST',
+					            data: { shopId: shopId },
+					            success: function(response) {
+					                alert("비밀번호가 초기화되었습니다.");
+					                window.location.reload();
+					            },
+					            error: function(xhr, status, error) {
+					                alert("비밀번호 초기화 실패: " + error);
+					            }
+					        });
+					    }
+					}
+
+
 					
 			</script> 
 			

@@ -34,5 +34,22 @@
     <!-- config파일 자동 로드 location="classpath:database.properties"  /!-->
     <context:property-placeholder location="/config/*.properties" /> 
     
+    	<!-- google email (사용 시 password 부분 수정 필요)-->
+	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+	    <property name="host" value="smtp.gmail.com" />
+	    <property name="port" value="587" />
+	    <property name="username" value="hejin28739@gmail.com" />
+	    <property name="password" value="password"/> 
+	    <property name="javaMailProperties">
+	        <props>
+	            <prop key="mail.transport.protocol">smtp</prop>
+	            <prop key="mail.smtp.auth">true</prop>
+	            <prop key="mail.smtp.starttls.enable">true</prop>
+	            <prop key="mail.debug">true</prop>
+	            <prop key="mail.smtp.ssl.trust">smtp.gmail.com</prop>
+	        </props>
+	    </property>
+	</bean>
+    
     
 </beans>

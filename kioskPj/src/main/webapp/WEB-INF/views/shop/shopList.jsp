@@ -30,14 +30,16 @@
     <h2 id="shoplist">가게를 선택해 주세요</h2>
     <br>
 
-    <div class="shop-grid">
-        <c:forEach var="s" items="${sList}" begin="0" end="5">
-            <div class="shop-item">
-                <img src="${s.shopLogoImage}" alt="가게 로고" class="shop-image">
-                <p><b>${s.shopName}</b></p>
-            </div>
-        </c:forEach>
-    </div>
+    	<form action="sList.do">
+		    <div class="shop-grid">
+		        <c:forEach var="s" items="${sList}" begin="0" end="5">
+		            <div class="shop-item">
+		                <img src="${s.shopLogoImage}" alt="가게 로고" class="shop-image">
+		                <p><b>${s.shopName}</b></p>
+		            </div>
+		        </c:forEach>
+		    </div>
+        </form>
 
     
 </body>

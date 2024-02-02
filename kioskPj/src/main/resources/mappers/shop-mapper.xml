@@ -90,19 +90,50 @@
 		WHERE SHOP_ID=#{shopId}
 	</update>	
 	
-	<!-- 유저 삭제 -->
-	<delete id="deleteShop" parameterType="shop">
-		DELETE SHOPS
-		WHERE SHOP_ID=#{shopId}
+	<!-- 업체 등록 -->
+	<insert id="enrollShop" parameterType="shop">
+		INSERT INTO SHOPS (
+		    SHOP_ID, 
+		    SHOP_PWD, 
+		    SHOP_NAME, 
+		    SHOP_REPRESENTATIVE, 
+		    SHOP_PHONE, 
+		    SHOP_EMAIL, 
+		    SHOP_LOGO_IMAGE
+		) VALUES (
+		    #{shopId}, 
+		    #{shopPwd}, 
+		    #{shopName}, 
+		    #{shopRepresentative}, 
+		    #{shopPhone}, 
+		    #{shopEmail}, 
+		    #{shopLogoImage}
+		);
+	</insert>
+	
+	<!-- 아이디 중복 체크 -->
+	<select id="checkDupId" resultType="int">
+		SELECT COUNT(*)
+		FROM SHOPS
+		WHERE SHOP_ID = #{checkId}
+		AND USER_STATUS = 'Y'
+	</select>
+	
+	<!-- 업체명 중복 체크 -->
+	<select id="checkName" resultType="int">
+		SELECT COUNT(*)
+		FROM SHOPS
+		WHERE SHOP_NAME = #{checkName}
+		AND USER_STATUS = 'Y'
+	</select>
+	
+	
+	<!-- 업체 삭제 -->
+	<delete id="deleteShop" parameterType="String">
+	    DELETE FROM SHOPS
+	    WHERE SHOP_ID=#{shopId}
 	</delete>
-	
-	
-	
-	
-	
-	
-	
-	
+
 	
 	
 	
