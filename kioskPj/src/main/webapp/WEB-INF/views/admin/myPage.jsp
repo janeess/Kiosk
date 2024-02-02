@@ -44,7 +44,7 @@
 	<div class="content">
 		<br><br>
 		<div class="innerOuter">
-			<h2>'${s.shopName}' 정보</h2>
+			<h2>'${s.shopName}'님 마이페이지</h2>
 			<br>
 			<input type="hidden" id="shopId" value="${s.shopId}">
 			<div class="form-group">
@@ -76,7 +76,9 @@
 				<br>
 				
 			</div>
-				<button type="button" class="btn btn-secondary"><a href="/updateShopForm.sh">회원정보 수정</a></button>
+				<a href="/updateShopForm.sh" class="btn btn-secondary">회원정보 수정</a>
+				<a href="/" class="btn btn-secondary">비밀번호 초기화</a>
+				<a href="myPageForm.sh" class="btn btn-secondary">목록</a>
 		</div>
 		<br>
 	</div>

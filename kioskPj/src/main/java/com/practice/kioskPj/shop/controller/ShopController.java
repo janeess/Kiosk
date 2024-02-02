@@ -1,17 +1,24 @@
 package com.practice.kioskPj.shop.controller;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Random;
 
+import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
@@ -46,6 +53,17 @@ public class ShopController {
 		return "admin/updateShopForm";
 	}
 	
+	// 업체 등록 페이지 이동
+	@RequestMapping("enrollShopForm.sh")
+	public String enrollShopForm() {
+		return "admin/enrollShopForm";
+	}
+	
+	// 비밀번호 초기화 페이지로 이동
+	@RequestMapping("resetPwdForm.sh")
+	public String resetPwdView() {
+		return "shop/resetPwdForm";
+	}
 	
 
 	// 가게 리스트 뽑아주기
@@ -186,20 +204,169 @@ public class ShopController {
 	    }
 	}
 	
-	// 회원 삭제
-	@RequestMapping("delete.sh")
-	public ModelAndView kickMember(String shopId, HttpSession session, ModelAndView mv) {
-
-		int result = shopService.deleteShop(shopId);
-
-		if (result > 0) {
+	
+	// 업체 등록
+	@RequestMapping("enrollShop.sh")
+	public ModelAndView enrollShop(Shop s, ModelAndView mv, HttpSession session) {
+		
+		int result = shopService.enrollShop(s);
+		
+		if(result > 0) {
+			Shop loginUser = shopService.loginMember(s.getShopId());
 			mv.setViewName("redirect:/manageAllShopsForm");
+		}else {
+			mv.setViewName("common/errorPage");
+		}
+		
+		return mv;
+		
+	}
+	
+	// 아이디 중복 체크
+	@ResponseBody
+	@RequestMapping("checkDupId.sh")
+	public String checkDupId(String checkId) {
+		
+		int count = shopService.checkDupId(checkId);
+
+		String str = "";
+
+		if (count > 0) {
+			str = "NNNNN";
 		} else {
-			mv.addObject("errorMsg", "탈퇴 처리 실패").setViewName("common/errorPage");
+			str = "NNNNY";
 		}
 
+		return str;
+	}
+	
+	// 업체명 중복 체크
+	@ResponseBody
+	@RequestMapping("checkDupName.sh")
+	public String checkDupName(String checkName) {
+		
+		int count = shopService.checkDupName(checkName);
+
+		String str = "";
+
+		if (count > 0) {
+			str = "NNNNN";
+		} else {
+			str = "NNNNY";
+		}
+
+		return str;
+	}
+	
+	// 업체 삭제
+	@RequestMapping("delete.sh")
+	public ModelAndView deleteShop(String shopId, HttpSession session, ModelAndView mv) {
+		
+		int result = shopService.deleteShop(shopId);
+		
+		
+		if(result>0) {
+			mv.setViewName("redirect:/");
+		}else {
+			mv.addObject("errorMsg", "삭제 실패").setViewName("common/errorPage");
+		}
 		return mv;
 	}
+	
+	
+	// 여기부터 수정해야됨
+	// 비밀번호 초기화 (메일 api)
+	@RequestMapping("resetPwd.sh")
+	public ModelAndView resetShopPwd(HttpSession session, HttpServletRequest request, HttpServletResponse response) throws IOException {
 
+		String chkEmail = (String) request.getParameter("chkEmail");
+
+		session.setAttribute("chkEmail", chkEmail);
+
+		String name = (String) request.getParameter("name2");
+
+		Shop vo = shopService.selectMember(chkEmail);
+
+		if (vo != null) {
+			Random r = new Random();
+			int num = r.nextInt(999999); // 랜덤난수설정
+
+			if (vo.getShopName().equals(name)) {
+				session.setAttribute("email", vo.getShopEmail());
+
+				String setfrom = "hejin28739@gmail.com"; //gmail
+				String tomail = chkEmail; // 받는사람
+				String title = "[FastKiosk] 비밀번호변경 인증 이메일 입니다";
+				String content = System.getProperty("line.separator") + "안녕하세요 회원님" + System.getProperty("line.separator")
+						+ "FastKiosk 비밀번호 초기화 인증번호는 '" + num + "'입니다." + System.getProperty("line.separator"); //
+
+				try {
+					MimeMessage message = mailSender.createMimeMessage();
+					MimeMessageHelper messageHelper = new MimeMessageHelper(message, true, "utf-8");
+
+					messageHelper.setFrom(setfrom);
+					messageHelper.setTo(tomail);
+					messageHelper.setSubject(title);
+					messageHelper.setText(content);
+
+					mailSender.send(message);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+
+				ModelAndView mv = new ModelAndView();
+				mv.setViewName("member/search_Pwd_Email");
+				mv.addObject("num", num);
+				return mv;
+			} else {
+				ModelAndView mv = new ModelAndView();
+				mv.setViewName("member/search_Pwd");
+				return mv;
+			}
+		} else {
+			ModelAndView mv = new ModelAndView();
+			mv.setViewName("member/search_Pwd");
+			return mv;
+		}
+
+	}
+
+	// 비밀번호 이메일 인증번호 확인
+	@RequestMapping(value = "search_Pwd_Email.me", method = RequestMethod.POST)
+	public String search_Pwd_Email(@RequestParam(value = "email_injeung") String email_injeung, @RequestParam(value = "num") String num,
+			HttpSession session) throws IOException {
+
+		if (email_injeung.equals(num)) {
+			session.setAttribute("alertMsg", "비밀번호 인증이 완료되었습니다.");
+			return "member/search_Pwd_New";
+
+		} else {
+			return "member/search_Pwd";
+		}
+	}
+
+	// 비밀번호 업데이트
+	@RequestMapping(value = "search_Pwd_New.me", method = RequestMethod.POST)
+	public String search_Pwd_New(HttpSession session, String newPwd) throws IOException {
+
+		Member vo = new Member();
+		String newEncPwd = bCryptPasswordEncoder.encode(newPwd);
+		vo.setUserPwd(newEncPwd);
+
+		String chkEmail = (String) session.getAttribute("chkEmail");
+		vo.setEmail(chkEmail);
+
+		int result = memberService.search_Pwd_New(vo);
+
+		if (result == 1) {
+			session.removeAttribute("chkEmail");
+			session.setAttribute("alertMsg", "비밀번호 변경이 완료되었습니다.");
+			return "member/login";
+		} else {
+			return "member/search_Pwd_New";
+		}
+	}
+
+	
 
 }

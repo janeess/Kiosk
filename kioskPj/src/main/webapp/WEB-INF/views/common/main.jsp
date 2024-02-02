@@ -5,6 +5,8 @@
     <meta charset="UTF-8">
     <title>키오스크 첫 화면</title>
     <style>
+    	#t { text-decoration:none }
+    	
         .touch-screen {
             display: flex;
             justify-content: center;
@@ -12,11 +14,7 @@
             height: 700px;
             background-color: #f5f5f5;
             font-family: Arial, sans-serif;
-            text-decoration: none; 
             text-align: center;
-        }
-        .touch-screen hover{
-        	  text-decoration: none; 
         }
         .touch-screen h1 {
             font-size: 2em;
@@ -25,10 +23,8 @@
     </style>
 </head>
 <body>
-        <a href="sList.do">
 		    <div class="touch-screen">
-		            <h1>주문하실 분은 화면을 터치해주세요</h1>
+		        <a id="t" href="sList.do"><h1>주문하실 분은 화면을 터치해주세요</h1></a>
 		    </div>
-        </a>
 </body>
 </html>
