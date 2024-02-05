@@ -77,7 +77,7 @@
 				
 			</div>
 				<a href="/updateShopForm.sh" class="btn btn-secondary">회원정보 수정</a>
-				<a href="/" class="btn btn-secondary">비밀번호 초기화</a>
+				<a href="resetPwdForm.sh" class="btn btn-secondary">비밀번호 초기화</a>
 				<a href="myPageForm.sh" class="btn btn-secondary">목록</a>
 		</div>
 		<br>

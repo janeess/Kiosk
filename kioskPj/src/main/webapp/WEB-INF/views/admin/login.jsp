@@ -15,6 +15,7 @@
 <body class="text-center">
 	<jsp:include page="../common/header.jsp" />
 	
+
     <div id="container">
     <form action="login.sh" method="post" onsubmit="return actionLogin(this);">
         
@@ -30,12 +31,6 @@
    </div> 
     <script>
     
-	    $(document).ready(function() {
-	    	var msg = "${msg}";
-	    	if(msg != ""){
-	    	alert(msg);    
-	    	}
-	    	});
     
 	    function actionLogin(form){
 	    	var username = $("#shopId").val();

@@ -78,6 +78,16 @@ public class ShopDao {
 		return sqlSession.delete("shopMapper.deleteShop", shopId);
 	}
 
+	//비밀번호 초기화 이메일 체크
+	public Shop selectShopEmail(SqlSessionTemplate sqlSession, String chkEmail) {
+		return sqlSession.selectOne("shopMapper.selectShopEmail", chkEmail);
+	}
+
+	// 비밀번호 초기화 후 재설정
+	public int resetPwdNew(SqlSessionTemplate sqlSession, Shop vo) {
+		return sqlSession.update("shopMapper.resetPwdNew", vo);
+	}
+
 
 
 

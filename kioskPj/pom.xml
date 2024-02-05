@@ -238,7 +238,7 @@
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-context-support</artifactId>
-			<version>5.3.24</version>
+			<version>${org.springframework-version}</version>
 		</dependency>
 		
 		<!-- 파일 업로드를 위한 라이브러리 commons-fileupload,commons-io -->

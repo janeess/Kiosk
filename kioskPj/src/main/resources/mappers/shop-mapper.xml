@@ -61,8 +61,7 @@
 	<!-- 회원정보 업데이트 -->
 	<update id="updateShop" parameterType="shop">
 		UPDATE SHOPS
-		SET SHOP_PWD = #{shopPwd}
-			,SHOP_NAME = #{shopName}
+		SET SHOP_NAME = #{shopName}
 			,SHOP_REPRESENTATIVE = #{shopRepresentative}
 			,SHOP_PHONE = #{shopPhone}
 			,SHOP_EMAIL = #{shopEmail}
@@ -134,8 +133,23 @@
 	    WHERE SHOP_ID=#{shopId}
 	</delete>
 
+	<!-- 비밀번호 초기화 이메일 확인 -->
+	<select id="selectShopEmail" resultMap="shopResultSet">
+		SELECT *
+		FROM SHOPS
+		WHERE SHOP_EMAIL = #{chkEmail}
+		AND USER_STATUS = 'Y'
+	</select>	
 	
-	
+	<!-- 비밀번호 초기화 후 재설정 -->
+	<update id="resetPwdNew" parameterType="shop">
+	    UPDATE SHOPS
+	    SET SHOP_PWD = #{shopPwd}
+	    WHERE SHOP_EMAIL = #{shopEmail}
+	    AND USER_STATUS = 'Y'
+	</update>
+
+
 	
 	
   

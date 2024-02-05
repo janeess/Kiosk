@@ -41,6 +41,12 @@ public interface ShopService {
 	// 업체 삭제
 	int deleteShop(String shopId);
 
+	// 비밀번호 초기화 이메일 체크
+	Shop selectShopEmail(String chkEmail);
+
+	// 비밀번호 초기화 후 재설정
+	int resetPwdNew(Shop vo);
+
 
 	
 

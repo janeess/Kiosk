@@ -1,5 +1,8 @@
 package com.practice.kioskPj.shop.controller;
 
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.request;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.request;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -13,6 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,6 +26,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.practice.kioskPj.common.PageInfo;
 import com.practice.kioskPj.common.Pagination;
@@ -34,6 +39,9 @@ public class ShopController {
 	
 	@Autowired
 	private ShopService shopService;
+	
+	@Autowired
+	private JavaMailSenderImpl mailSender;
 	
 	// 로그인 폼으로 이동
 	@RequestMapping("loginForm.sh")
@@ -117,7 +125,7 @@ public class ShopController {
         cal.add(Calendar.YEAR, 1); // 1년 추가
         
         // mv에 추가
-        mv.addObject("s", s).setViewName("admin/myPage");;
+        mv.addObject("s", s).setViewName("admin/myPage");
         mv.addObject("contractPeriodEnd", cal.getTime()); // 종료 날짜
 		
 		return mv;
@@ -143,18 +151,7 @@ public class ShopController {
 		if (result > 0) {
 			
 			Shop updateShop = shopService.loginMember(s.getShopId());
-			
-	        // 계약 기간 종료 날짜
-	        Calendar cal = Calendar.getInstance();
-	        cal.setTime(s.getContractPeriod());
-	        cal.add(Calendar.YEAR, 1); // 1년 추가
-	        
-	        
-	        System.out.println("Contract Period End: " + cal.getTime());
-	        
-			session.setAttribute("contractPeriodEnd", cal.getTime());
-			
-			
+
 			session.setAttribute("loginUser", updateShop);
 			return "redirect:/myPageForm.sh";
 
@@ -274,27 +271,30 @@ public class ShopController {
 	}
 	
 	
-	// 여기부터 수정해야됨
+
 	// 비밀번호 초기화 (메일 api)
 	@RequestMapping("resetPwd.sh")
 	public ModelAndView resetShopPwd(HttpSession session, HttpServletRequest request, HttpServletResponse response) throws IOException {
 
+		ModelAndView mv = new ModelAndView();
 		String chkEmail = (String) request.getParameter("chkEmail");
+		String name = (String) request.getParameter("shopName"); 
 
 		session.setAttribute("chkEmail", chkEmail);
 
-		String name = (String) request.getParameter("name2");
+		// 비밀번호 초기화 이메일 체크
+		Shop vo = shopService.selectShopEmail(chkEmail);
+		
 
-		Shop vo = shopService.selectMember(chkEmail);
-
-		if (vo != null) {
-			Random r = new Random();
-			int num = r.nextInt(999999); // 랜덤난수설정
-
-			if (vo.getShopName().equals(name)) {
+		if (vo != null && vo.getShopEmail().equals(chkEmail)) {
+			if (vo.getShopName().equals(name)) { // 이메일과 이름이 모두 일치하는 경우 비밀번호 초기화
+				
+				Random r = new Random();
+				int num = r.nextInt(999999); // 인증번호용 랜덤난수설정
+				
 				session.setAttribute("email", vo.getShopEmail());
 
-				String setfrom = "hejin28739@gmail.com"; //gmail
+				String setfrom = "hejin28739@gmail.com";
 				String tomail = chkEmail; // 받는사람
 				String title = "[FastKiosk] 비밀번호변경 인증 이메일 입니다";
 				String content = System.getProperty("line.separator") + "안녕하세요 회원님" + System.getProperty("line.separator")
@@ -314,56 +314,59 @@ public class ShopController {
 					e.printStackTrace();
 				}
 
-				ModelAndView mv = new ModelAndView();
-				mv.setViewName("member/search_Pwd_Email");
+				mv.setViewName("shop/resetPwdEmail");
 				mv.addObject("num", num);
-				return mv;
-			} else {
-				ModelAndView mv = new ModelAndView();
-				mv.setViewName("member/search_Pwd");
-				return mv;
+			} else {  // 업체명이 일치하지 않는 경우
+				mv.addObject("alertMsg", "입력하신 정보가 일치하지 않습니다.");
+				mv.setViewName("shop/resetPwdForm");
 			}
-		} else {
-			ModelAndView mv = new ModelAndView();
-			mv.setViewName("member/search_Pwd");
-			return mv;
+		} else { // 이메일이 일치하지 않는 경우
+			mv.addObject("errorMsg", "입력하신 이메일이 존재하지 않습니다.");
+			mv.setViewName("shop/resetPwdForm");
 		}
+		
+		return mv;
 
 	}
 
+	// 여기부터 수정해야됨
 	// 비밀번호 이메일 인증번호 확인
-	@RequestMapping(value = "search_Pwd_Email.me", method = RequestMethod.POST)
-	public String search_Pwd_Email(@RequestParam(value = "email_injeung") String email_injeung, @RequestParam(value = "num") String num,
-			HttpSession session) throws IOException {
+	@RequestMapping(value = "resetPwdEmail.sh", method = RequestMethod.POST)
+	public String resetPwdEmail(@RequestParam(value = "emailAuthNum") String emailAuthNum, HttpSession session, RedirectAttributes redirectAttributes) {
+			
+		
+		String savedNum = (String) session.getAttribute("num");
 
-		if (email_injeung.equals(num)) {
-			session.setAttribute("alertMsg", "비밀번호 인증이 완료되었습니다.");
-			return "member/search_Pwd_New";
-
+		if (emailAuthNum.equals(savedNum)) {
+			session.removeAttribute("num");
+			redirectAttributes.addFlashAttribute("alertMsg", "비밀번호 인증이 완료되었습니다.");
+			return "redirect:/resetPwdNew.sh";
 		} else {
-			return "member/search_Pwd";
+			 redirectAttributes.addFlashAttribute("errorMsg", "인증번호가 일치하지 않습니다.");
+			  return "redirect:/resetPwdForm.sh";
 		}
 	}
 
 	// 비밀번호 업데이트
-	@RequestMapping(value = "search_Pwd_New.me", method = RequestMethod.POST)
-	public String search_Pwd_New(HttpSession session, String newPwd) throws IOException {
+	@RequestMapping(value = "resetPwdNew.sh", method = RequestMethod.POST)
+	public String resetPwdNew(HttpSession session, String newPwd) throws IOException {
 
-		Member vo = new Member();
-		String newEncPwd = bCryptPasswordEncoder.encode(newPwd);
-		vo.setUserPwd(newEncPwd);
+		Shop vo = new Shop();
+		vo.setShopPwd(newPwd);
 
 		String chkEmail = (String) session.getAttribute("chkEmail");
-		vo.setEmail(chkEmail);
+		vo.setShopEmail(chkEmail);
 
-		int result = memberService.search_Pwd_New(vo);
+		int result = shopService.resetPwdNew(vo);
 
 		if (result == 1) {
-			session.removeAttribute("chkEmail");
-			session.setAttribute("alertMsg", "비밀번호 변경이 완료되었습니다.");
-			return "member/login";
+	        session.removeAttribute("chkEmail");
+	        session.removeAttribute("loginUser");
+	        session.setAttribute("alertMsg", "비밀번호 변경이 완료되었습니다.");
+	        return "redirect:/loginForm.sh";
 		} else {
-			return "member/search_Pwd_New";
+			session.setAttribute("errorMsg", "비밀번호 변경이 실패하였습니다.");
+			return "shop/resetPwdNew";
 		}
 	}
 

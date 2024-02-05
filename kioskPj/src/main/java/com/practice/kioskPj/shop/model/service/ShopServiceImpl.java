@@ -92,6 +92,18 @@ public class ShopServiceImpl implements ShopService {
 		return shopDao.deleteShop(sqlSession, shopId);
 	}
 
+	// 비밀번호 초기화 이메일 체크
+	@Override
+	public Shop selectShopEmail(String chkEmail) {
+		return shopDao.selectShopEmail(sqlSession, chkEmail);
+	}
+
+	// 비밀번호 초기화 후 재설정
+	@Override
+	public int resetPwdNew(Shop vo) {
+		return shopDao.resetPwdNew(sqlSession, vo);
+	}
+
 
 
 

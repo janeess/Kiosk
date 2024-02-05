@@ -54,9 +54,6 @@
 				<label for="shopId">*ID : </label>
 				<input type="text" class="form-control" id="shopId" value="${loginUser.shopId}" name="shopId" readonly> <br>
 				
-				<label for="shopPwd">*비밀번호 : </label>
-				<input type="password" class="form-control" id="shopPwd" value="" name="shopPwd"> <br>
-				
 				<c:if test="${loginUser.shopId ne 'admin'}">
 				<label for="shopName">*업체명 : </label>
 				<input type="text" class="form-control" id="shopName" value="" name="shopName">
@@ -84,20 +81,11 @@
 	<script>
     function formCheck() {
         // 필수 필드 가져오기
-        var shopPwd = $("#shopPwd").val();
         var shopName = $("#shopName").val();
         var shopRepresentative = $("#shopRepresentative").val();
         var shopPhone = $("#shopPhone").val();
         var shopEmail = $("#shopEmail").val();
 
-        // 비밀번호 검사
-        // 조건: 8 ~ 14자, 최소 하나의 특수문자
-        var pwdPattern = /^(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,14}$/;
-        if (!pwdPattern.test(shopPwd)) {
-            alert("비밀번호는 8자 이상 14자 이하로 입력해야하며, 최소 하나의 특수문자가 포함되어야 합니다");
-            $("#shopPwd").focus();
-            return false;
-        }
 
         // 업체명 검사
         if (shopName === "") {
@@ -135,11 +123,11 @@
             type: 'POST', 
             data: $('#board').serialize(), // 폼 데이터 직렬화
             success: function(response) {
-            	alert('업체가 성공적으로 등록되었습니다.');
+            	alert('성공적으로 수정완료되었습니다.');
                 $('#board').submit();
             },
             error: function(error) {
-            	alert('등록 중 오류가 발생했습니다.');
+            	alert('수정 중 오류가 발생했습니다.');
             }
         });
 
