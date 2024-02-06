@@ -6,7 +6,7 @@
   <mapper namespace="shopMapper">
   
 	 
-	<resultMap id="shopResultSet" type="shop">
+<resultMap id="shopResultSet" type="shop">
     <result property="shopNum" column="SHOP_NUM"/>
     <result property="shopId" column="SHOP_ID"/>
     <result property="shopPwd" column="SHOP_PWD"/>
@@ -16,7 +16,6 @@
     <result property="shopEmail" column="SHOP_EMAIL"/>
     <result property="contractPeriod" column="CONTRACT_PERIOD"/>
     <result property="updateDate" column="UPDATE_DATE"/>
-    <result property="shopLogoImage" column="SHOP_LOGO_IMAGE"/>
     <result property="userGrade" column="USER_GRADE"/>
     <result property="userStatus" column="USER_STATUS"/>
 </resultMap>
@@ -24,8 +23,7 @@
 	 <!-- 가게 리스트 조회 -->
 	<select id="selectListShop" resultMap="shopResultSet">
 		   SELECT SHOP_NUM,
-		           SHOP_NAME,
-		           SHOP_LOGO_IMAGE
+		           SHOP_NAME
 		    FROM SHOPS
 		    WHERE USER_STATUS = 'Y'
 		    AND USER_GRADE = '2'
@@ -97,16 +95,14 @@
 		    SHOP_NAME, 
 		    SHOP_REPRESENTATIVE, 
 		    SHOP_PHONE, 
-		    SHOP_EMAIL, 
-		    SHOP_LOGO_IMAGE
+		    SHOP_EMAIL
 		) VALUES (
 		    #{shopId}, 
 		    #{shopPwd}, 
 		    #{shopName}, 
 		    #{shopRepresentative}, 
 		    #{shopPhone}, 
-		    #{shopEmail}, 
-		    #{shopLogoImage}
+		    #{shopEmail} 
 		);
 	</insert>
 	
@@ -149,7 +145,15 @@
 	    AND USER_STATUS = 'Y'
 	</update>
 
-
+	<!-- 관리자 - 비밀번호 초기화(초기화 비밀번호 설정) -->
+	<update id="resetPassword" parameterType="shop">
+ 		UPDATE SHOPS
+	    SET SHOP_PWD = #{shopPwd}
+	    WHERE SHOP_ID = #{shopId}
+	</update>
+	
+	
+	
 	
 	
   

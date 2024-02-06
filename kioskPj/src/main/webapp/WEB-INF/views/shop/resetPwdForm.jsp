@@ -35,7 +35,7 @@ ul.form {
 	
 		<form class = "content" action="resetPwd.sh" method="post">
 			<div class="group">
-				<h3 class="tit-st4">비밀번호 초기화</h3> <br>
+				<h3 class="tit-st4">비밀번호 재설정</h3> <br>
 				<div class="box">
 					<div class="top" id="ck_input">
 					</div>

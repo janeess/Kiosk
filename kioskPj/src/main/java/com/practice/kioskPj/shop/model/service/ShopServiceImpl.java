@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
 import com.practice.kioskPj.common.PageInfo;
@@ -102,6 +101,12 @@ public class ShopServiceImpl implements ShopService {
 	@Override
 	public int resetPwdNew(Shop vo) {
 		return shopDao.resetPwdNew(sqlSession, vo);
+	}
+	
+	// 관리자 - 비밀번호 초기화(초기화 비밀번호 설정)
+	@Override
+	public int resetPassword(String shopId, String resetDefaultPwd) {
+		return shopDao.resetPassword(sqlSession, shopId, resetDefaultPwd);
 	}
 
 

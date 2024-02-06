@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mapper namespace="menuMapper">
+	
+<resultMap id="menuResultSet" type="menu">
+    <result property="menuNum" column="MENU_NUM"/>
+    <result property="shopNum" column="SHOP_NUM"/>
+    <result property="menuName" column="MENU_NAME"/>
+    <result property="menuImageOrigin" column="MENU_IMAGE_ORIGIN"/>
+    <result property="menuImageChange" column="MENU_IMAGE_CHANGE"/>
+    <result property="price" column="PRICE"/>
+    <result property="menuStatus" column="MENU_STATUS"/>
+</resultMap>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</mapper>

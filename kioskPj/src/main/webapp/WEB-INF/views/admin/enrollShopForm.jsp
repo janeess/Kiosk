@@ -68,8 +68,6 @@
 				<label for="shopEmail">*이메일 : </label>
 				<input type="text" class="form-control" id="shopEmail" value="" name="shopEmail"> <br>
 				
-				<label for="shopLogoImage">로고이미지 </label>
-				<input type="file" class="form-control" id="shopLogoImage" value="" name="shopLogoImage"><br>
 				<br>
 				
 			</div>

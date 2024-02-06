@@ -1,6 +1,7 @@
 package com.practice.kioskPj.shop.model.dao;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -86,6 +87,11 @@ public class ShopDao {
 	// 비밀번호 초기화 후 재설정
 	public int resetPwdNew(SqlSessionTemplate sqlSession, Shop vo) {
 		return sqlSession.update("shopMapper.resetPwdNew", vo);
+	}
+	
+	// 관리자 - 비밀번호 초기화(초기화 비밀번호 설정)
+	public int resetPassword(SqlSessionTemplate sqlSession, String shopId, String resetDefaultPwd) {
+		return sqlSession.update("shopMapper.resetPassword", Map.of("shopId", shopId, "shopPwd", resetDefaultPwd));
 	}
 
 
