@@ -15,7 +15,8 @@ public class Menu {
 	private int menuNum;
 	private int shopNum;
 	private String menuName;
-	private String menuImageUrl;
+	private String menuImageOrigin;
+	private String menuImageChange;
 	private int price;
 	private String menuStatus;
 

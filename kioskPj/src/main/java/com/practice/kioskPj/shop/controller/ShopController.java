@@ -1,13 +1,9 @@
 package com.practice.kioskPj.shop.controller;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.request;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.request;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Random;
 
 import javax.mail.internet.MimeMessage;
@@ -16,6 +12,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Controller;
@@ -26,7 +24,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.practice.kioskPj.common.PageInfo;
 import com.practice.kioskPj.common.Pagination;
@@ -42,6 +39,7 @@ public class ShopController {
 	
 	@Autowired
 	private JavaMailSenderImpl mailSender;
+	
 	
 	// 로그인 폼으로 이동
 	@RequestMapping("loginForm.sh")
@@ -219,6 +217,8 @@ public class ShopController {
 		
 	}
 	
+
+	
 	// 아이디 중복 체크
 	@ResponseBody
 	@RequestMapping("checkDupId.sh")
@@ -272,7 +272,7 @@ public class ShopController {
 	
 	
 
-	// 비밀번호 초기화 (메일 api)
+	// 업체 - 비밀번호 초기화 (메일 api)
 	@RequestMapping("resetPwd.sh")
 	public ModelAndView resetShopPwd(HttpSession session, HttpServletRequest request, HttpServletResponse response) throws IOException {
 
@@ -329,26 +329,24 @@ public class ShopController {
 
 	}
 
-	// 여기부터 수정해야됨
-	// 비밀번호 이메일 인증번호 확인
-	@RequestMapping(value = "resetPwdEmail.sh", method = RequestMethod.POST)
-	public String resetPwdEmail(@RequestParam(value = "emailAuthNum") String emailAuthNum, HttpSession session, RedirectAttributes redirectAttributes) {
-			
-		
-		String savedNum = (String) session.getAttribute("num");
+	// 업체 -비밀번호 이메일 인증번호 확인
+	@RequestMapping(value = "/resetPwdEmail.sh", method = RequestMethod.POST)
+	public String resetPwdEmail(@RequestParam(value = "emailAuthNum") String emailAuthNum, @RequestParam(value = "num") String num, 
+			HttpSession session) throws IOException {
 
-		if (emailAuthNum.equals(savedNum)) {
+		if (emailAuthNum.equals(num)) {
 			session.removeAttribute("num");
-			redirectAttributes.addFlashAttribute("alertMsg", "비밀번호 인증이 완료되었습니다.");
-			return "redirect:/resetPwdNew.sh";
+			session.setAttribute("alertMsg", "비밀번호 인증이 완료되었습니다.");
+			return "shop/resetPwdNew";
 		} else {
-			 redirectAttributes.addFlashAttribute("errorMsg", "인증번호가 일치하지 않습니다.");
-			  return "redirect:/resetPwdForm.sh";
+			session.setAttribute("errorMsg", "인증번호가 일치하지 않습니다.");
+			return "shop/resetPwdForm";
 		}
 	}
 
-	// 비밀번호 업데이트
-	@RequestMapping(value = "resetPwdNew.sh", method = RequestMethod.POST)
+
+	// 업체 - 비밀번호 업데이트
+	@RequestMapping(value = "/resetPwdNew.sh", method = RequestMethod.POST)
 	public String resetPwdNew(HttpSession session, String newPwd) throws IOException {
 
 		Shop vo = new Shop();
@@ -370,6 +368,28 @@ public class ShopController {
 		}
 	}
 
+	
+	// 관리자 - 비밀번호 초기화(초기화 비밀번호 설정)
+	@RequestMapping("resetPassword.ad")
+	public ResponseEntity<String> resetPassword(@RequestParam("shopId") String shopId) {
+	    try {
+	        
+	    	// 비밀번호 초기화 처리
+	    	String resetDefaultPwd = "qwerty!!!22";
+	    	
+	        int result = shopService.resetPassword(shopId, resetDefaultPwd);
+	        
+	        if (result > 0) {
+	            return ResponseEntity.ok("비밀번호가 'qwerty!!!22'로 초기화되었습니다.");
+	        } else {
+	            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("비밀번호 초기화 실패");
+	        }
+	    } catch (Exception e) {
+	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("서버 오류 발생");
+	    }
+	}
+
+	
 	
 
 }

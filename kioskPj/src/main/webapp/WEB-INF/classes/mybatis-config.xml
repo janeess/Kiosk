@@ -8,10 +8,12 @@
 	</settings>
 	<typeAliases>
 		<typeAlias type="com.practice.kioskPj.menu.model.vo.Menu" alias="menu" />
+		<typeAlias type="com.practice.kioskPj.menu.model.vo.Attatchment" alias="attatchment" />
 		<typeAlias type="com.practice.kioskPj.shop.model.vo.Shop" alias="shop" />
 	</typeAliases>
 
 	<mappers>
 		<mapper resource="/mappers/shop-mapper.xml"></mapper>
+		<mapper resource="/mappers/menu-mapper.xml"></mapper>
 	</mappers>
 </configuration>

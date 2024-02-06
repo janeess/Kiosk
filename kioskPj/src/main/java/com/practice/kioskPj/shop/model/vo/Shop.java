@@ -21,7 +21,6 @@ public class Shop {
 	private String shopEmail;
 	private Timestamp contractPeriod;
 	private Timestamp updateDate;
-	private String shopLogoImage;
 	private String userGrade;
 	private String userStatus;
 	

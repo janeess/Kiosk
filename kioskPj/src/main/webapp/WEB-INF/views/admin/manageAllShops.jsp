@@ -105,7 +105,7 @@
 								</select>
 						        </td>
 						        <td class="admin_board_content_nm">
-						         	<button onclick="resetPassword('${s.shopId}')" class="btn btn-warning">비밀번호 초기화</button>
+						         	<button class="btn btn-warning" onclick="resetPassword('${s.shopId}')">비밀번호 초기화</button>
 						        </td>
 						        <td class="admin_board_content_nm">
 						        	<button class="btn btn-danger" onclick="deleteShop('${s.shopId}')" >삭제</button>
@@ -165,11 +165,11 @@
 					function resetPassword(shopId) {
 					    if (confirm("해당 상점의 비밀번호를 초기화하시겠습니까?")) {
 					        $.ajax({
-					            url: 'resetPassword.sh', 
+					            url: 'resetPassword.ad', 
 					            type: 'POST',
 					            data: { shopId: shopId },
 					            success: function(response) {
-					                alert("비밀번호가 초기화되었습니다.");
+					                alert("비밀번호가 'qwerty!!!22'로 초기화되었습니다.");
 					                window.location.reload();
 					            },
 					            error: function(xhr, status, error) {
