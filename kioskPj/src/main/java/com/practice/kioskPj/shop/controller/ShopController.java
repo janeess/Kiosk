@@ -70,7 +70,6 @@ public class ShopController {
 	public String resetPwdView() {
 		return "shop/resetPwdForm";
 	}
-	
 
 	// 가게 리스트 뽑아주기
 	@RequestMapping("sList.do")
@@ -80,9 +79,8 @@ public class ShopController {
 	    
 	    model.addAttribute("sList", sList);
 
-	    return "shop/shopList";
+	    return "shop/menuList";
 	}
-     
 	
 	
 	// 로그인
@@ -109,6 +107,7 @@ public class ShopController {
 			return "common/errorPage";
 		}
 	}
+	
 	
 	// 회원정보 리스트 불러오기
 	@RequestMapping("myPage.sh")

@@ -1,8 +1,6 @@
 package com.practice.kioskPj.menu.model.vo;
 
 
-import java.text.DecimalFormat;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

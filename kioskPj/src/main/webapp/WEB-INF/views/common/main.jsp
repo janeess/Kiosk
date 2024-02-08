@@ -24,7 +24,7 @@
 </head>
 <body>
 		    <div class="touch-screen">
-		        <a id="t" href="sList.do"><h1>주문하실 분은 화면을 터치해주세요</h1></a>
+		        <a id="t" href="getMenuList.do"><h1>주문하실 분은 화면을 터치해주세요</h1></a>
 		    </div>
 </body>
 </html>

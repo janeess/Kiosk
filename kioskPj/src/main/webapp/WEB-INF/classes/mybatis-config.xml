@@ -8,7 +8,6 @@
 	</settings>
 	<typeAliases>
 		<typeAlias type="com.practice.kioskPj.menu.model.vo.Menu" alias="menu" />
-		<typeAlias type="com.practice.kioskPj.menu.model.vo.Attatchment" alias="attatchment" />
 		<typeAlias type="com.practice.kioskPj.shop.model.vo.Shop" alias="shop" />
 	</typeAliases>
 

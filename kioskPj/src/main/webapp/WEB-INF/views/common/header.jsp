@@ -49,7 +49,7 @@
 		   	        <a class="nav-icon position-relative text-decoration-none" href="/index.jsp">
 		                <i class="fa fa-fw fa-user text-dark mr-3"></i>
 			                <span class="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark">
-			                	<img src="../resources/img/icon_home.png" style="width:50px; height:50px;" />
+			                	<img src="../resources/img/common/icon_home.png" style="width:50px; height:50px;" />
 			                </span>
 		          	</a>
 		          	
@@ -57,7 +57,7 @@
 	                <div class="flex-fill">
                         <li class="nav-item">
 							<div class="header-main">
-								<img src="../resources/img/kioskLogo.png" />
+								<img src="../resources/img/common/kioskLogo.png" />
 							</div>
                         </li>
 	                </div>
@@ -76,7 +76,7 @@
 					                 <a class="nav-icon position-relative text-decoration-none" href="logout.sh">
 					                 	 <i class="fa fa-fw fa-user text-dark mr-3"></i>
 					                 	 <span class="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark">
-					                 	 	<img src="../resources/img/icon_signout.png" style="width:50px; height:50px;"/>
+					                 	 	<img src="../resources/img/common/icon_signout.png" style="width:50px; height:50px;"/>
 				                           </span>
 					                 </a>
 				             </c:when>
@@ -85,7 +85,7 @@
 					                 <a class="nav-icon position-relative text-decoration-none" href="loginForm.sh">
 					                     <i class="fa fa-fw fa-user text-dark mr-3"></i>
 					                     <span class="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark">
-					                         <img src="../resources/img/icon_login.png" style="width:50px; height:50px;"/>
+					                         <img src="../resources/img/common/icon_login.png" style="width:50px; height:50px;"/>
 					                     </span>
 					                 </a>
 				             </c:otherwise>

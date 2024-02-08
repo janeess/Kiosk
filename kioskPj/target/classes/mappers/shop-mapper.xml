@@ -20,7 +20,7 @@
     <result property="userStatus" column="USER_STATUS"/>
 </resultMap>
 	  
-	 <!-- 가게 리스트 조회 -->
+	<!-- 가게 리스트 조회 -->
 	<select id="selectListShop" resultMap="shopResultSet">
 		   SELECT SHOP_NUM,
 		           SHOP_NAME
@@ -30,6 +30,8 @@
 		    ORDER BY SHOP_NUM
 		    LIMIT 6
 	</select>
+	
+	
 	
 	<!-- 로그인 -->
 	<select id="loginMember" parameterType="shop" resultMap="shopResultSet">
