@@ -4496,3 +4496,9 @@ Created Time: 2024-02-05 16:16:32.740
 
 !ENTRY org.eclipse.m2e.logback.appender 2 0 2024-02-08 16:35:01.015
 !MESSAGE Using platform encoding (MS949 actually) to copy filtered resources, i.e. build is platform dependent!
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2024-02-08 16:52:26.566
+!MESSAGE Using platform encoding (MS949 actually) to copy filtered resources, i.e. build is platform dependent!
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2024-02-08 16:52:26.567
+!MESSAGE Using platform encoding (MS949 actually) to copy filtered resources, i.e. build is platform dependent!
