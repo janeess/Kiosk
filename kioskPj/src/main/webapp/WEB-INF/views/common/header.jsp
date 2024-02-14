@@ -1,102 +1,50 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<% pageContext.setAttribute("replaceChar","\n"); %>
 <!DOCTYPE html>
-<html>
+<html lang="ko">
 <head>
-<style>
- .nav{
- 	text-align: center;
- }
- #img{
- 	background-size: contain;
- }
- .nav-item {
- 	list-style-type: none;
- }
-</style>
-<meta charset="UTF-8">
-<title>header</title>
-
-	<link rel="preconnect" href="https://fonts.googleapis.com">
-	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet">
-	
-	<!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
-    <!-- jQuery library -->
-    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
-    <!-- Popper JS -->
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
-    <!-- Latest compiled JavaScript -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
-	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css">
+    <title>키오스크 메인 화면</title>
+    <style>
+        @media (max-width: 768px) {
+            nav ul {
+                padding: 0;
+                margin: 0;
+                list-style: none;
+                display: flex;
+                justify-content: space-between;
+            }
+            nav img {
+                height: 40px;
+            }
+        }
+    </style>
 </head>
 <body>
-
-
-    <!-- Header -->
-    <nav class="navbar navbar-expand-lg navbar-light shadow">
-        <div class="container d-flex justify-content-between align-items-center" align="center;">
-        
-
-				
-	            <div class="align-self-center collapse navbar-collapse flex-fill  d-lg-flex justify-content-lg-between" id="templatemo_main_nav" style="text-align: center;" >
-	            	
-	            	<!-- 홈화면 -->
-		   	        <a class="nav-icon position-relative text-decoration-none" href="/index.jsp">
-		                <i class="fa fa-fw fa-user text-dark mr-3"></i>
-			                <span class="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark">
-			                	<img src="../resources/img/common/icon_home.png" style="width:50px; height:50px;" />
-			                </span>
-		          	</a>
-		          	
-		          	<!-- 로고 -->
-	                <div class="flex-fill">
-                        <li class="nav-item">
-							<div class="header-main">
-								<img src="../resources/img/common/kioskLogo.png" />
-							</div>
-                        </li>
-	                </div>
-	                
-	                <!-- 로그인,마이페이지,로그아웃 -->
-	                	<c:choose>
-		                	<c:when test="${not empty loginUser}">
-		                		<!-- 마이페이지 -->
-					                 <a class="nav-icon position-relative text-decoration-none" href="myPageForm.sh" style="margin-right: 60px;">
-					                 	 <i class="fa fa-fw fa-user text-dark mr-3"></i>
-					                 	 <span class="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark">
-					                 	 	<img src="../resources/img/icon_mypage.png" style="width:50px; height:50px;"/>
-				                           </span>
-					                 </a>
-				                 <!-- 로그아웃 -->
-					                 <a class="nav-icon position-relative text-decoration-none" href="logout.sh">
-					                 	 <i class="fa fa-fw fa-user text-dark mr-3"></i>
-					                 	 <span class="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark">
-					                 	 	<img src="../resources/img/common/icon_signout.png" style="width:50px; height:50px;"/>
-				                           </span>
-					                 </a>
-				             </c:when>
-				             <c:otherwise>
-			                 	<!-- 로그인 되지 않았을 때: 로그인 버튼 -->
-					                 <a class="nav-icon position-relative text-decoration-none" href="loginForm.sh">
-					                     <i class="fa fa-fw fa-user text-dark mr-3"></i>
-					                     <span class="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark">
-					                         <img src="../resources/img/common/icon_login.png" style="width:50px; height:50px;"/>
-					                     </span>
-					                 </a>
-				             </c:otherwise>
-		                </c:choose> 
-		           </div>
-	                 
-             </div>
-    </nav>
-    <!-- Close Header -->
-    
-
-
+<nav class="container-fluid">
+    <ul>
+        <li><a href="/index.jsp"><img src="https://cdn-icons-png.flaticon.com/512/25/25694.png" alt="홈" style="height:50px;"></a></li>
+    </ul>    
+    <div style="text-align:center;">
+        <img src="../resources/img/common/kioskLogo.png" alt="로고" style="height:100px;">
+    </div>
+   	<c:choose>
+		<c:when test="${not empty loginUser}">
+		    <ul style="float:right;">
+		        <li><a href="myPageForm.sh"><img src="../resources/img/common/icon_myPage.png" alt="마이페이지" style="height:50px;"></a></li>
+		        <li><a href="logout.sh"><img src="../resources/img/common/icon_signout.png" alt="로그아웃" style="height:50px;"></a></li>
+		    </ul>
+		 </c:when>
+		 <c:otherwise>
+		     <ul style="float:right;">
+		        <li><a href="loginForm.sh"><img src="../resources/img/common/icon_login.png" alt="로그인" style="height:50px;"></a></li>
+		    </ul>
+		 </c:otherwise>
+	</c:choose> 
+</nav>
+<br><br>
 </body>
 </html>

@@ -6,7 +6,12 @@
 <head>
 <style>
 .group {
-	text-align : center;
+	display: flex;
+	justify-content: center; /* 수평 중앙 정렬 */
+    flex-direction: column; /* 자식 요소들을 세로로 정렬 */
+    align-items: center; /* 자식 요소들을 수직 중앙 정렬 */
+    text-align: center; /* 텍스트 중앙 정렬 */
+	
 }
 ul.form {
 	list-style: none;
@@ -50,7 +55,7 @@ ul.form {
 							<span class="tt">새 비밀번호 확인</span>
 							<div class="cont">
 								<div class="tel_confirm">
-									<label for="pw2" class="hide">새 비밀번호 확인</label>
+									<label for="pw2" class="hide"></label>
 									<input type="text" name="newPwd2" id="newPwd2" onchange="isSame();">
 								<span id=same></span>
 								<button type="submit" class="bg-black" id="check">비밀번호 변경</button>

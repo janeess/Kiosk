@@ -9,69 +9,74 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <style>
-	.btn btn-secondary {
-	    color: white; 
-	    text-decoration: none; 
-	}
-	.btn btn-secondary hover{
-	    color: white; 
-	    text-decoration: none; 
-	}
-    #shp {
-        margin: 0;
-        height: 100%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        flex-direction: column;
+     .shp {
+        width: auto; /* 너비를 자동으로 설정 */
+        max-width: 1600px; /* 최대 너비 설정 */
+        margin: 0 auto; /* 상하 여백은 0, 좌우는 자동으로 설정하여 중앙 정렬 */
+        padding: 0 5px; /* 내부 여백으로 좌우에 20px 적용 */
     }
-    
-    table {
-        width: 80%; 
-        margin-top: 20px;
-        border-collapse: collapse; 
-    }
-
-    .admin_board_wrap {
-        margin: auto; 
-    }
-
-    .admin_board_head {
-        background-color: #f2f2f2; 
-        color: #333; 
-        text-align: center; 
-        padding: 10px; 
-        border-bottom: 1px solid #ddd; 
-    }
-
-    .admin_board_content {
+    .btn-secondary {
+        background-color: #6c757d; /* 회색 계열의 배경 색상 */
+        border: none;
+        color: white;
+        padding: 10px 24px;
         text-align: center;
-        padding: 10px;
-        border-bottom: 1px solid #ddd; 
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 4px 2px; /* 버튼 간격 조정 */
+        cursor: pointer;
+        border-radius: 5px; /* 경계면 둥글게 */
+    }
+
+    .btn-secondary:hover {
+        background-color: #5a6268; /* 호버 시 색상 변경 */
+    }
+
+    #ibtn {
+        text-align: center;
+        padding: 20px 0; /* 상단과 하단에 여백 추가 */
+    }
+
+    #pagingArea {
+        display: flex;
+        justify-content: center; /* 가운데 정렬 */
+        padding: 40px 0; /* 버튼과의 간격을 늘림 */
     }
 
     .pagination {
-        justify-content: center; 
-        padding-bottom: 20px; 
+        list-style: none;
+        padding: 0;
+    }
+
+    .page-item {
+        display: inline-block;
     }
 
     .page-link {
-        color: #333; 
+        color: #333;
+        padding: 8px 16px;
+        text-decoration: none;
+        border-radius: 5px; /* 링크 모서리 둥글게 */
+    }
+
+    .page-item.active .page-link,
+    .page-link:hover {
+        background-color: #007bff;
+        color: white;
     }
 
     .page-item.disabled .page-link {
-        color: #ccc; 
-    }
-
-    .page-item.active .page-link {
-        background-color: #007bff; 
-        color: white; 
+        color: #ccc;
+        pointer-events: none;
     }
 </style>
+
 </head>
 <body>
 <jsp:include page="../common/header.jsp"/>
 <br>
+
 			<div class="shp">
 			<br>
 			<h3 style="text-align:center;">상점 리스트</h3> <br>
@@ -116,12 +121,11 @@
 				</table>
 				
 			</div>	
-				<br><br>
+				<br>
 				<div id="ibtn" style="text-align: center;">
 					<a href="enrollShopForm.sh" class="btn btn-secondary">상점 등록</a>
 					<a href="myPageForm.sh" class="btn btn-secondary">목록</a>
 				</div>
-				<br><br>
 				
 			<script>
 			

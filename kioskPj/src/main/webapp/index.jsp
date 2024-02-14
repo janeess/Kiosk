@@ -10,7 +10,6 @@
 <title>Main</title>
 </head>
 <body>
-
 		<jsp:forward page="/WEB-INF/views/home.jsp"/>
 </body>
 </html>

@@ -7,6 +7,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<h1 style="text-align:center;">푸터 미리!!</h1>
+	<footer class="container"><small>&copy; 2024 키오스크 회사</small></footer>
 </body>
 </html>

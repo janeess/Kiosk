@@ -2,29 +2,34 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
     <title>키오스크 첫 화면</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css">
     <style>
-    	#t { text-decoration:none }
-    	
-        .touch-screen {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 700px;
-            background-color: #f5f5f5;
-            font-family: Arial, sans-serif;
-            text-align: center;
-        }
-        .touch-screen h1 {
-            font-size: 2em;
-            color: #333;
+        @media (max-width: 768px) {
+            .grid {
+                padding: 0;
+                margin: 0;
+                list-style: none;
+                display: flex;
+                justify-content: space-between;
+            }
+            main img {
+                width: 100%;
+                max-width: 300px; /* 이미지가 너무 크지 않도록 최대 너비 설정 */
+            }
         }
     </style>
 </head>
 <body>
-		    <div class="touch-screen">
-		        <a id="t" href="getMenuList.do"><h1>주문하실 분은 화면을 터치해주세요</h1></a>
-		    </div>
+<main class="container" style="text-align:center;">
+	   <div class="grid">
+        <section>
+            <a href="getMenuList.do"><img src="../resources/img/common/touchicon.png" alt="터치 로고" style="height:150px;">
+            <h2>주문하실 분은 화면을 터치해주세요</h2></a>
+        </section>
+    </div>
+</main>
+
 </body>
 </html>

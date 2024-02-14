@@ -16,6 +16,7 @@ h4{
 <body>
 
 	<jsp:include page="../views/common/header.jsp" />
+	<br><br>
 	<jsp:include page="../views/common/main.jsp" />
 	<br>
 	<!--<jsp:include page="../views/common/footer.jsp" />-->

@@ -8,11 +8,12 @@
 <title>Insert title here</title>
 <style>
 .group {
-	text-align : center;
+	display: flex;
+	justify-content: center; /* 수평 중앙 정렬 */
+    flex-direction: column; /* 자식 요소들을 세로로 정렬 */
+    align-items: center; /* 자식 요소들을 수직 중앙 정렬 */
+    text-align: center; /* 텍스트 중앙 정렬 */
 }
-ul.form {
-	list-style: none;
-   }
 </style>
 </head>
 
@@ -52,7 +53,7 @@ ul.form {
 									<span class="tt">이메일 주소</span>
 									<div class="cont">
 										<div class="tel_confirm">
-											<label for="email" class="hide">이메일</label>
+											<label for="email" class="hide"></label>
 											<input type="text" name="chkEmail" id="chkEmail">
 										<button type="submit" id="check" class="bg-black btn-c">인증번호 받기</button>
 										</div>

@@ -34,6 +34,14 @@
         
         table * {margin:5px;}
         table {width:100%;}
+        .button-group {
+		    display: flex;
+		    justify-content: flex-start;
+		     margin-right: 10px; 
+		}
+		#btnupdate {
+	    margin-right: 10px; 
+	}
         
         
 </style>
@@ -71,8 +79,10 @@
 				<br>
 				
 			</div>
-				<button type="submit" class="bbs-btn-st2 bg-purple3" onclick="formCheck();return false;" formaction="update.sh">수정</button>
-				<button class="bbs-btn-st2 bg-black_r" onclick="history.back();return false;">취소</button>
+			 <div class="button-group">
+				<button type="submit" class="bbs-btn-st2 bg-purple3" id="btnupdate" onclick="formCheck();return false;" formaction="update.sh" style="width: auto; max-width: 150px;">수정</button>
+				<button class="bbs-btn-st2 bg-black_r" onclick="history.back();return false;" style="width: auto; max-width: 150px;">취소</button>
+			</div>
 			</form>
 		</div>
 		<br>

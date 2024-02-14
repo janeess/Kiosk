@@ -7,7 +7,11 @@
 <head>
 <style>
 .group {
-	text-align : center;
+	display: flex;
+	justify-content: center; /* 수평 중앙 정렬 */
+    flex-direction: column; /* 자식 요소들을 세로로 정렬 */
+    align-items: center; /* 자식 요소들을 수직 중앙 정렬 */
+    text-align: center; /* 텍스트 중앙 정렬 */
 }
 ul.form {
 	list-style: none;
