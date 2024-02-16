@@ -42,7 +42,7 @@
     
     <div class="centered-content">
         <a href="myPage.sh?shopId=${loginUser.shopId}" class="btn">마이페이지</a><br>
-        <a href="manageMenus.ad" class="btn">메뉴 관리</a><br>
+        <a href="getMenuList.ad" class="btn">메뉴 관리</a><br>
         
         <c:if test="${loginUser.shopId eq 'admin'}">
             <a href="manageAllShopsForm" class="btn">상점 관리</a><br>
